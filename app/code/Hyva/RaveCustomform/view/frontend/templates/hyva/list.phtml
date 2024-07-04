@@ -1,0 +1,58 @@
+<?php $collection = $block->getCustomformCollection(); ?>
+<?php if($collection->count() > 0): ?>
+    <div class="overflow-x-auto mb-4">
+        <table class="w-full table-auto" id="customform-data-table">
+            <thead>
+                <tr>
+                    <th scope="col" class="p-4 border border-gray-300 text-start bg-gray-300 font-semibold col first_name">First Name</th>
+                    <th scope="col" class="p-4 border border-gray-300 text-start bg-gray-300 font-semibold col last_name">Last Name</th>
+                    <th scope="col" class="p-4 border border-gray-300 text-start bg-gray-300 font-semibold col email">Email</th>
+                    <th scope="col" class="p-4 border border-gray-300 text-start bg-gray-300 font-semibold col image">Image</th>
+                    <th scope="col" class="p-4 border border-gray-300 text-start bg-gray-300 font-semibold col phone">Phone</th>
+                    <th scope="col" class="p-4 border border-gray-300 text-start bg-gray-300 font-semibold col col-message">Message</th>
+                    <th scope="col" class="p-4 border border-gray-300 text-start bg-gray-300 font-semibold col status">Status</th>
+                    <th scope="col" class="p-4 border border-gray-300 text-start bg-gray-300 font-semibold col created_at">Created At</th>
+                    <th scope="col" class="p-4 border border-gray-300 text-start bg-gray-300 font-semibold col actions">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($collection as $key => $data): ?>
+                    <tr class="even:bg-container-darker">
+                        <td data-th="first_name" class="p-4 border border-slate-300 text-start first_name"><?php echo $data->getFirstName(); ?></td>
+                        <td data-th="last_name" class="p-4 border border-slate-300 text-start last_name"><?php echo $data->getLastName(); ?></td>
+                        <td data-th="Email" class="p-4 border border-slate-300 text-start email"><?php echo $data->getEmail(); ?></td>
+                        <td data-th="Image" class="p-4 border border-slate-300 text-start image">
+                            <?php if($data->getImage()): ?>
+                                <img width="70" height="70" src="<?php echo $block->getBaseUrl().'/media/ravedigital/customform'.$data->getImage(); ?>">
+                            <?php else: ?>
+                                <p>No Image</p>
+                            <?php endif; ?>
+                        </td>
+                        <td data-th="Phone" class="p-4 border border-slate-300 text-start phone"><?php echo $data->getPhone(); ?></td>
+                        <td data-th="Message" class="p-4 border border-slate-300 text-start col-message"><?php echo $data->getMessage(); ?></td>
+                        <td data-th="Status" class="p-4 border border-slate-300 text-start status">
+                            <?php if($data->getStatus() == 1): ?>
+                                <p>Enable</p>
+                            <?php else: ?>
+                                <p>Disable</p>
+                            <?php endif; ?>
+                        </td>
+                        <td data-th="Date" class="p-4 border border-slate-300 text-start created_at"><?php echo $data->getCreatedAt(); ?></td>
+                        <td data-th="Actions" class="p-4 border border-slate-300 text-start actions">
+                            <?php $id = ($data->getId()) ? $data->getId() : $data['id']; ?>
+                            <!-- "$data->getTesting13Id()" was not working when I generated Vky_Testing13 module. That's why I had to place above line. -->
+                            <a href="<?php echo $block->getBaseUrl().'customform/index/view/id/'.$id; ?>" class="action view">
+                                <span>View</span>
+                            </a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <?php if ($block->getPagerHtml()): ?>
+        <div class="order-products-toolbar toolbar bottom"><?php echo $block->getPagerHtml(); ?></div>
+    <?php endif ?>
+<?php else: ?>
+    <h2>We couldn't find any records</h2>
+<?php endif; ?>

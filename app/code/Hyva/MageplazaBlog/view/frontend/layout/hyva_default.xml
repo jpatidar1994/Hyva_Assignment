@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <script src="Hyva_MageplazaBlog::js/ckeditor.js" />
+        <script src="Hyva_MageplazaBlog::js/splide.min.js" />
+        <css src="Hyva_MageplazaBlog::css/splide.min.css" />
+
+        <script src="Hyva_MageplazaBlog::js/treeselectjs.umd.js" />
+        <css src="Hyva_MageplazaBlog::css/treeselectjs.css" />
+    </head>
+    <update handle="hyva_form_validation"/>
+    <body>
+        <referenceBlock name="mpblog.sidebar.category">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">Hyva_MageplazaBlog::hyva/category/widget.phtml</argument>
+            </action>
+        </referenceBlock>
+
+        <referenceBlock name="mpblog.design">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">Hyva_MageplazaBlog::hyva/design.phtml</argument>
+            </action>
+        </referenceBlock>
+
+        <referenceBlock name="mpblog.sidebar.search" >
+            <action method="setTemplate" ifconfig="blog/sidebar/search/enable_search">
+                <argument name="template" xsi:type="string">Hyva_MageplazaBlog::hyva/sidebar/search.phtml</argument>
+            </action>
+        </referenceBlock>
+
+
+        <referenceBlock name="mpblog.sidebar.mostview" >
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">Hyva_MageplazaBlog::hyva/sidebar/mostview.phtml</argument>
+            </action>
+        </referenceBlock>
+
+
+        <referenceBlock name="mpblog.post.view" >
+            <action method="setTemplate" >
+                <argument name="template" xsi:type="string">Hyva_MageplazaBlog::hyva/post/view.phtml</argument>
+            </action>
+        </referenceBlock>
+
+        <referenceBlock name="footer-content">
+            <block class="Mageplaza\Blog\Block\Html\Footer" name="mp_blog_footer_link" template="Hyva_MageplazaBlog::hyva/html/footer.phtml" after="-"/>
+        </referenceBlock>
+
+        <referenceBlock name="related.category.products">
+            <action method="setTemplate" >
+                <argument name="template" xsi:type="string">Hyva_MageplazaBlog::hyva/product/list.phtml</argument>
+            </action>
+        </referenceBlock>
+
+
+        <referenceBlock name="related.post.tab" >
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">Hyva_MageplazaBlog::hyva/post/relatedpost.phtml</argument>
+            </action>
+        </referenceBlock>
+    </body>
+</page>
+

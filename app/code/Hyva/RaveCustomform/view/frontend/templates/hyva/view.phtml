@@ -1,0 +1,35 @@
+<?php
+    $singleData = $block->getSingleData();
+?>
+<div class="md:flex mb-4">
+    <strong class="pr-2">First Name:</strong>
+    <p><?php echo $singleData->getFirstName(); ?></p>   
+</div>
+<div class="md:flex mb-4">
+    <strong class="pr-2">Last Name:</strong>
+    <p><?php echo $singleData->getLastName(); ?></p>   
+</div>
+<div class="md:flex mb-4">
+    <strong class="pr-2">Email:</strong>
+    <p><?php echo $singleData->getEmail(); ?></p>
+</div>
+<div class="md:flex mb-4">
+    <strong class="pr-2">Message:</strong>
+    <p><?php echo $this->_filterProvider->getPageFilter()->filter($singleData->getMessage()); ?></p>
+</div>
+<div class="md:flex mb-4">
+    <strong class="pr-2">Image:</strong>
+    <?php if($singleData->getImage()): ?>
+        <img width="400" height="300" src="<?php echo $block->getBaseUrl().'pub/media/ravedigital/customform'.$singleData->getImage(); ?>">
+    <?php else: ?>
+        <p>No Image</p>
+    <?php endif; ?>
+</div>
+<div class="md:flex mb-4">
+    <strong class="pr-2">Phone:</strong>
+    <p><?php echo $singleData->getPhone(); ?></p>
+</div>
+<div class="md:flex mb-4">
+    <strong class="pr-2">Date:</strong>
+    <p><?php echo $singleData->getCreatedAt(); ?></p>
+</div>

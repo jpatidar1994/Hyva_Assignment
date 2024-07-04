@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+	<menu>
+		<add id="RaveDigital::top_level" title="RaveDigital" module="RaveDigital_Customform" sortOrder="9999" resource="Magento_Backend::content"/>
+		<add id="RaveDigital_Customform::manage_mlcustomform" title="Manage Inquiry" module="RaveDigital_Customform" sortOrder="9999" resource="RaveDigital_Customform::manage_mlcustomform" parent="RaveDigital::top_level" action="mladmincustomform/customform"/>
+	</menu>
+</config>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="mpblog_author"/>
+    <update handle="hyva_modal"/>
+
+    <body>
+        <referenceBlock name="mpblog.author.post" >
+            <action method="setTemplate" >
+                <argument name="template" xsi:type="string">Hyva_MageplazaBlog::hyva/post/author_post.phtml</argument>
+            </action>
+        </referenceBlock>
+
+        <referenceBlock name="mpblog.manage.post" >
+            <action method="setTemplate" >
+                <argument name="template" xsi:type="string">Hyva_MageplazaBlog::hyva/post/manage_post.phtml</argument>
+            </action>
+        </referenceBlock>
+    </body>
+</page>
+

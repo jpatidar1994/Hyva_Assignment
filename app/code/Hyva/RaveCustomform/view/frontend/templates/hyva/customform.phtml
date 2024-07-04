@@ -1,0 +1,213 @@
+<?php
+$formId = 'customform';
+?>
+<div class="container">
+    <legend class="legend"><span><?= $block->escapeHtml(__('Customer inquiry listing ')) ?><a href="<?php echo $block->getBaseUrl().'customform/index/list'; ?>">(Visit List Page)</a></span></legend>
+    <form class="form" 
+          action="<?= $block->getUrl('customform/index/save'); ?>" 
+          method="post" 
+          autocomplete="off"
+          x-data="Object.assign(hyva.formValidation($el), formValidation())"
+          @submit.prevent="submitForm"
+          id="<?= $escaper->escapeHtmlAttr($formId) ?>"
+          id="form-validate"
+          >
+
+        <div class="field field-reserved w-full required">
+            <label for="first_name" class="label">
+                <span><?= $block->escapeHtml(__('First Name:')) ?></span>
+            </label>
+            <div class="control">
+                <input type="text" name="first_name" id="first_name" class="w-full form-input"
+                       x-model="form.first_name"
+                       data-validate='{"required": true}'>
+            </div>
+        </div>
+
+        <div class="field field-reserved w-full required">
+            <label for="last_name" class="label">
+                <span><?= $block->escapeHtml(__('Last Name:')) ?></span>
+            </label>
+            <div class="control">
+                <input type="text" name="last_name" id="last_name" class="w-full form-input"
+                       x-model="form.last_name"
+                       data-validate='{"required": true}'>
+            </div>
+        </div>
+
+        <div class="field field-reserved w-full required">
+            <label for="email" class="label">
+                <span><?= $block->escapeHtml(__('Email:')) ?></span>
+            </label>
+            <div class="control">
+                <input type="text" name="email" id="email" class="w-full form-input"
+                       x-model="form.email"
+                       data-validate='{"required": true, "email": true}'>
+            </div>
+        </div>
+
+        <div class="field field-reserved w-full required">
+            <label for="phone" class="label">
+                <span><?= $block->escapeHtml(__('Phone:')) ?></span>
+            </label>
+            <div class="control">
+                <input type="text" name="phone" id="phone" class="w-full form-input"
+                       x-model="form.phone"
+                       data-validate='{"required": true}'>
+            </div>
+        </div>
+
+        <div class="field field-reserved w-full required">
+            <label for="message" class="label">
+                <span><?= $block->escapeHtml(__('Message:')) ?></span>
+            </label>
+            <div class="control">
+                <textarea name="message" id="message" class="w-full form-input"
+                          x-model="form.message"
+                          data-validate='{"required": true}'></textarea>
+            </div>
+        </div>
+
+        <div class="field field-reserved w-full">
+            <label for="image" class="label">
+                <span><?= $block->escapeHtml(__('Image:')) ?></span>
+            </label>
+            <div class="control">
+                <input type="file" name="image" id="image" class="w-full form-input"
+                       x-ref="image"
+                       @change="form.image = $refs.image.files[0]">
+            </div>
+        </div>
+
+        <div class="actions-toolbar">
+            <div class="primary">
+                <button type="submit" 
+                        id="inq-submit" 
+                        class="action submit primary" 
+                        title="<?= $block->escapeHtmlAttr(__('Submit')) ?>">
+                    <span><?= $block->escapeHtml(__('Submit')) ?></span>
+                </button>
+            </div>
+        </div>
+        <table x-show="inquiry.length > 0" class="w-full table-auto mt-4">
+            <thead>
+                <tr>
+                    <th scope="col" class="p-4 border border-gray-300 text-start bg-gray-300 font-semibold col">First Name</th>
+                    <th scope="col" class="p-4 border border-gray-300 text-start bg-gray-300 font-semibold col">Last Name</th>
+                    <th scope="col" class="p-4 border border-gray-300 text-start bg-gray-300 font-semibold col">Email</th>
+                    <th scope="col" class="p-4 border border-gray-300 text-start bg-gray-300 font-semibold col">Phone</th>
+                    <th scope="col" class="p-4 border border-gray-300 text-start bg-gray-300 font-semibold col">Message</th>
+                </tr>
+            </thead>
+            <tbody>
+                <template x-for="post in inquiry" :key="post.id">
+                    <tr>
+                        <td x-text="post.first_name" scope="col" class="p-4 border border-gray-300 text-start bg-gray-300 font-semibold col"></td>
+                        <td x-text="post.last_name" scope="col" class="p-4 border border-gray-300 text-start bg-gray-300 font-semibold col"></td>
+                        <td x-text="post.email" scope="col" class="p-4 border border-gray-300 text-start bg-gray-300 font-semibold col"></td>
+                        <td x-text="post.phone" scope="col" class="p-4 border border-gray-300 text-start bg-gray-300 font-semibold col"></td>
+                        <td x-text="post.message" scope="col" class="p-4 border border-gray-300 text-start bg-gray-300 font-semibold col"></td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+    </form>
+</div>
+<script>
+function formValidation() {
+    return {
+        inquiry: [],
+        form: {
+            first_name: '',
+            last_name: '',
+            email: '',
+            phone: '',
+            message: '',
+            image: null
+        },
+        errors: 0,
+        loading: false,
+        showSubmittedData(postData) {
+            setTimeout(() => {
+                this.inquiry.push(postData);
+            }, 1000);
+        },
+        submitForm() {
+            this.validate().then(() => {
+                console.log(this.errors);
+                if (this.errors === 0) {
+                       this.doPostRequest();
+                    }
+                })
+                .catch((invalid) => {
+                    if (invalid.length > 0) {
+                        invalid[0].focus();
+                    }
+                });
+        },
+        doPostRequest() {
+            const formData = new FormData();
+            console.log(formData);
+            formData.append('form_key', hyva.getFormKey());
+            formData.append('first_name', this.form.first_name);
+            formData.append('last_name', this.form.last_name);
+            formData.append('email', this.form.email);
+            formData.append('phone', this.form.phone);
+            formData.append('message', this.form.message);
+            var postData = { ...this.form, id: Date.now() };
+            if (this.form.image) {
+                formData.append('image', this.form.image);
+            }
+
+            const postUrl = '<?= $block->getUrl('customform/index/save'); ?>';
+            fetch(postUrl, {
+                method: 'POST',
+                body: formData,
+                credentials: 'include'
+            })
+            .then(response => {
+                if (response.redirected) {
+                    window.location.href = response.url;
+                } else if (response.ok) {
+                    return response.json();
+                } else {
+                    this.dispatchMessage("warning", response.message, 5000);
+                }
+            })
+            .then(response => {
+
+                if (response && response.success) {
+                setTimeout(() => {
+                    this.showSubmittedData(postData);
+                    this.resetForm();
+                }, 1000);
+                this.dispatchMessage("success", response.message, 5000);
+                } else {
+                    this.dispatchMessage("error", response.message, 5000);
+                }
+            })
+            .catch(error => {
+                this.dispatchMessage("error", error, 5000);
+            });
+        },
+        resetForm() {
+            this.form.first_name = '';
+            this.form.last_name = '';
+            this.form.email = '';
+            this.form.phone = '';
+            this.form.message = '';
+            this.form.image = null;
+            document.getElementById('image').value = ''; // Reset file input (optional)
+        },
+        dispatchMessage(type, message, timeout) {
+            typeof window.dispatchMessages && window.dispatchMessages(
+                [{
+                    type: type,
+                    text: message,
+                }],
+                timeout
+            );
+        }
+    };
+}
+</script>
